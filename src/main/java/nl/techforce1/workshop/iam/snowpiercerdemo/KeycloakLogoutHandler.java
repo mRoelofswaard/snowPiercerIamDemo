@@ -19,26 +19,27 @@ import lombok.extern.slf4j.Slf4j;
 public class KeycloakLogoutHandler implements LogoutHandler {
 
     @Override
-    public void logout(
-            final HttpServletRequest request, //
+    public void logout(final HttpServletRequest request, //
             final HttpServletResponse response, //
-      final Authentication auth) {
+            final Authentication auth) {
+
         logoutFromKeycloak((OidcUser) auth.getPrincipal());
     }
 
     private void logoutFromKeycloak(final OidcUser user) {
         final String endSessionEndpoint = user.getIssuer() + "/protocol/openid-connect/logout";
-        final UriComponentsBuilder builder = UriComponentsBuilder
-          .fromUriString(endSessionEndpoint)
-          .queryParam("id_token_hint", user.getIdToken().getTokenValue());
 
-        final ResponseEntity<String> logoutResponse = new RestTemplate().getForEntity(
-        builder.toUriString(), String.class);
-        if (logoutResponse.getStatusCode().is2xxSuccessful()) {
+        final UriComponentsBuilder builder = UriComponentsBuilder //
+                .fromUriString(endSessionEndpoint) //
+                .queryParam("id_token_hint", user.getIdToken()
+                        .getTokenValue());
+
+        final ResponseEntity<String> logoutResponse = new RestTemplate().getForEntity(builder.toUriString(), String.class);
+        if (logoutResponse.getStatusCode()
+                .is2xxSuccessful()) {
             log.info("Successfully logged out from Keycloak");
         } else {
             log.error("Could not propagate logout to Keycloak");
         }
     }
-
 }

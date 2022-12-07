@@ -21,6 +21,7 @@ public enum WagonClass {
     private final List<Role> allowedRoles;
 
     public boolean isAccessAllowed(final List<Role> grantedRoles) {
-        return grantedRoles.stream().anyMatch(allowedRoles::contains);
+        return grantedRoles.stream()
+                .anyMatch(allowedRoles::contains);
     }
 }

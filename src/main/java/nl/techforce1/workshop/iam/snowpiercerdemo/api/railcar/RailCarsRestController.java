@@ -3,6 +3,7 @@ package nl.techforce1.workshop.iam.snowpiercerdemo.api.railcar;
 import java.net.URI;
 import java.util.List;
 
+import nl.techforce1.workshop.iam.snowpiercerdemo.authentication.AuthenticationService;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.Railcar;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.SnowPiercer;
 
@@ -21,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/snowpiercer/cars")
 public class RailCarsRestController {
+
+    private final AuthenticationService authenticationService;
 
     private final SnowPiercer snowPiercer;
 

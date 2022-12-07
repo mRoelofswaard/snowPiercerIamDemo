@@ -4,5 +4,4 @@ public enum Traction {
     FORWARDS,
     BACKWARDS,
     INERT
-
 }

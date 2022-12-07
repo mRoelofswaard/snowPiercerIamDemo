@@ -41,7 +41,9 @@ public class SnowPiercer implements Train {
     }
 
     public Optional<Railcar> getEngine() {
-        return getRailcars().stream().filter(railcar -> railcar.getWagonClass() == ENGINE).findFirst();
+        return getRailcars().stream()
+                .filter(railcar -> railcar.getWagonClass() == ENGINE)
+                .findFirst();
     }
 
     public Optional<Railcar> getRailcar(final String name) {
@@ -49,15 +51,20 @@ public class SnowPiercer implements Train {
     }
 
     public List<Railcar> getRailcars() {
-        return railcars.values().stream().toList();
+        return railcars.values()
+                .stream()
+                .toList();
     }
 
     public List<Railcar> getTailCars() {
-        return getRailcars().stream().filter(railcar -> railcar.getWagonClass() == TAIL).toList();
+        return getRailcars().stream()
+                .filter(railcar -> railcar.getWagonClass() == TAIL)
+                .toList();
     }
 
     public boolean isTractionSupported(final Traction traction) {
-        return traction == INERT || getRailcars().stream().allMatch(containAtLeastOneInhabitant()) && hasAllTailCarsCaryingEnoughTailies();
+        return traction == INERT || getRailcars().stream()
+                .allMatch(containAtLeastOneInhabitant()) && hasAllTailCarsCaryingEnoughTailies();
     }
 
     private Predicate<Railcar> containAtLeastOneInhabitant() {
@@ -73,5 +80,4 @@ public class SnowPiercer implements Train {
                         .contains(TAILY))
                 .count() >= getTailCars().size();
     }
-
 }

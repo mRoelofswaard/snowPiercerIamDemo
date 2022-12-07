@@ -11,6 +11,7 @@ import lombok.Getter;
 
 @Getter
 public class Railcar {
+
     final String name;
 
     final WagonClass wagonClass;
@@ -37,11 +38,13 @@ public class Railcar {
     }
 
     private boolean isBrakeManMissing() {
-        return inhabitants.stream().noneMatch(inhabitant -> inhabitant.roles().contains(BRAKEMAN));
+        return inhabitants.stream()
+                .noneMatch(inhabitant -> inhabitant.roles()
+                        .contains(BRAKEMAN));
     }
 
     private boolean isTaily(final Inhabitant candidate) {
-        return candidate.roles.stream()
+        return candidate.roles().stream()
                 .anyMatch(role -> role == TAILY);
     }
 

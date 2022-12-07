@@ -20,8 +20,10 @@ public class EngineRestController {
 
     @PutMapping
     public ResponseEntity<Traction> move(@RequestBody final Traction traction) {
-        if (snowPiercer.getEngine().isEmpty()) {
-            return ResponseEntity.notFound().build();
+        if (snowPiercer.getEngine()
+                .isEmpty()) {
+            return ResponseEntity.notFound()
+                    .build();
         }
 
         if (snowPiercer.isTractionSupported(traction)) {
@@ -30,6 +32,4 @@ public class EngineRestController {
 
         return ResponseEntity.ok(Traction.INERT);
     }
-
-
 }
