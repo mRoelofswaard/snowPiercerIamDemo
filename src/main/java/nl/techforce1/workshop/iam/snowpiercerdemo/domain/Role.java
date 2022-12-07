@@ -10,9 +10,13 @@ public enum Role {
 
     public static Role fromRoleString(final String value) {
         try {
-            return Role.valueOf(value);
+            return Role.valueOf(removePrefix(value));
         } catch (final IllegalArgumentException e) {
             return TAILY;
         }
+    }
+
+    private static String removePrefix(final String value) {
+        return value.split("_")[1];
     }
 }

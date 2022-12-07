@@ -18,12 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 class SecurityConfig {
 
-    private final KeycloakLogoutHandler keycloakLogoutHandler;
-
-    SecurityConfig(final KeycloakLogoutHandler keycloakLogoutHandler) {
-        this.keycloakLogoutHandler = keycloakLogoutHandler;
-    }
-
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST)
@@ -51,7 +45,7 @@ class SecurityConfig {
     private JwtGrantedAuthoritiesConverter buildJwtGrantedAuthoritiesConverter() {
         final JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
         converter.setAuthoritiesClaimName("roles");
-        converter.setAuthorityPrefix("");
+        converter.setAuthorityPrefix("ROLE_");
 
         return converter;
     }
