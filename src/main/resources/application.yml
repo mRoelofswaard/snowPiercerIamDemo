@@ -9,4 +9,3 @@ spring.security:
       provider:
         keycloak:
           issuer-uri: http://localhost:8380/realms/snowpiercer
-          user-name-attribute: preferred_username
