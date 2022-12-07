@@ -46,7 +46,7 @@ public class RailCarsRestController {
     }
 
     private URI buildLocation(final Railcar railcar, final UriComponentsBuilder uriComponentsBuilder) {
-        return uriComponentsBuilder.path("{name}")
+        return uriComponentsBuilder.path("/snowpiercer/cars/{name}")
                 .buildAndExpand(railcar.getName())
                 .toUri();
     }
