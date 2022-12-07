@@ -1,5 +1,8 @@
 package nl.techforce1.workshop.iam.snowpiercerdemo;
 
+import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.DIRECTOR;
+import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.ENGINEER;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,9 +27,9 @@ class SecurityConfig {
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
             .requestMatchers(HttpMethod.POST)
-            .hasRole("director")
+            .hasRole(DIRECTOR.name())
                 .requestMatchers("snowpiercer/cars/engine/*")
-                .hasRole("engineer")
+                .hasRole(ENGINEER.name())
             .anyRequest()
             .authenticated();
         http.oauth2Login()
