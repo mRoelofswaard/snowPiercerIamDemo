@@ -6,7 +6,7 @@ spring.security:
           scope: openid
           client-id: snowpiercerApi1
           authorization-grant-type: authorization_code
-    provider:
-      keycloak:
-        issuer-uri: http://localhost:8380/auth/realms/snowpiercer
-        user-name-attribute: preferred_username
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:8380/realms/snowpiercer
+          user-name-attribute: preferred_username
