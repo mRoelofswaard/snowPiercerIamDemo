@@ -1,5 +1,7 @@
 package nl.techforce1.workshop.iam.snowpiercerdemo.api.railcar;
 
+import static org.springframework.http.HttpStatus.FORBIDDEN;
+
 import nl.techforce1.workshop.iam.snowpiercerdemo.authentication.AuthenticationService;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.Railcar;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.SnowPiercer;
@@ -37,7 +39,7 @@ public class RailcarEntranceController {
                 return ResponseEntity.ok(new Entrance(carName, userName));
             }
 
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(FORBIDDEN).build();
         }
 
         return ResponseEntity.notFound().build();
