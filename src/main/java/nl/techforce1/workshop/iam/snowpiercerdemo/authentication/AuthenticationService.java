@@ -17,6 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class AuthenticationService {
 
+    public Authentication getAuth() {
+        return getAuthentication().get();
+    }
+
     public List<Role> getRoles() {
         return getAuthentication() //
                 .map(Authentication::getAuthorities) //
