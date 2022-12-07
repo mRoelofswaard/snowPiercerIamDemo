@@ -1,0 +1,12 @@
+spring.security.oauth2.client:
+  oauth2:
+    client:
+      registration:
+        keycloak:
+          scope: openid
+          client-id: snowpiercerApi1
+          authorization-grant-type: authorization_code
+    provider:
+      keycloak:
+        issuer-uri: http://localhost:8380/auth/realms/snowpiercer
+        user-name-attribute: preferred_username
