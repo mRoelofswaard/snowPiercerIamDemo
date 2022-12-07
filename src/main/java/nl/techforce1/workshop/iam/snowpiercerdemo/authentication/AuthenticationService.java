@@ -33,6 +33,6 @@ public class AuthenticationService {
     }
 
     private List<Role> respectMaAuthorita(final Collection<? extends GrantedAuthority> authorities) {
-        return authorities.stream().map(GrantedAuthority::getAuthority).map(Role::valueOf).toList();
+        return authorities.stream().map(GrantedAuthority::getAuthority).map(Role::fromRoleString).toList();
     }
 }
