@@ -43,6 +43,8 @@ public class AuthenticationService {
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .map(Role::fromRoleString)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
                 .toList();
     }
 }

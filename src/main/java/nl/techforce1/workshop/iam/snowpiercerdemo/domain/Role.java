@@ -1,5 +1,10 @@
 package nl.techforce1.workshop.iam.snowpiercerdemo.domain;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+
+import java.util.Optional;
+
 public enum Role {
     ENGINEER,
     DIRECTOR,
@@ -10,11 +15,11 @@ public enum Role {
 
     public static final String ROLE_PREFIX = "ROLE_";
 
-    public static Role fromRoleString(final String value) {
+    public static Optional<Role> fromRoleString(final String value) {
         try {
-            return Role.valueOf(removePrefix(value));
+            return of(Role.valueOf(removePrefix(value)));
         } catch (final IllegalArgumentException e) {
-            return TAILY;
+            return empty();
         }
     }
 
