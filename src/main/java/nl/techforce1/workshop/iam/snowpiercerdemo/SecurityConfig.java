@@ -2,6 +2,7 @@ package nl.techforce1.workshop.iam.snowpiercerdemo;
 
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.DIRECTOR;
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.ENGINEER;
+import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.ROLE_PREFIX;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,7 @@ class SecurityConfig {
     private JwtGrantedAuthoritiesConverter buildJwtGrantedAuthoritiesConverter() {
         final JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
         converter.setAuthoritiesClaimName("roles");
-        converter.setAuthorityPrefix("ROLE_");
+        converter.setAuthorityPrefix(ROLE_PREFIX);
 
         return converter;
     }

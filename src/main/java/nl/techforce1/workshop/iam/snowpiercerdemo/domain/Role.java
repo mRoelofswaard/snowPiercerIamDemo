@@ -8,6 +8,8 @@ public enum Role {
     COMMON_PASSENGER,
     TAILY;
 
+    public static final String ROLE_PREFIX = "ROLE_";
+
     public static Role fromRoleString(final String value) {
         try {
             return Role.valueOf(removePrefix(value));
@@ -17,6 +19,6 @@ public enum Role {
     }
 
     private static String removePrefix(final String value) {
-        return value.split("_")[1];
+        return value.substring(ROLE_PREFIX.length());
     }
 }
