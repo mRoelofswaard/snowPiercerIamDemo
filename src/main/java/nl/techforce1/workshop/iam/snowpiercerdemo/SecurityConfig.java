@@ -21,9 +21,9 @@ class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "snowpiercer/cars")
+        http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/snowpiercer/cars")
                         .hasRole(DIRECTOR.name())
-                        .requestMatchers("snowpiercer/cars/engine/*")
+                        .requestMatchers("/snowpiercer/cars/engine/*")
                         .hasRole(ENGINEER.name())
                         .anyRequest()
                         .authenticated())
