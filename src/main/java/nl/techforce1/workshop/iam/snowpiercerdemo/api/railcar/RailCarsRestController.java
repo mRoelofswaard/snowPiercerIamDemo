@@ -24,9 +24,10 @@ public class RailCarsRestController {
 
     private final SnowPiercer snowPiercer;
 
-    @PostMapping(consumes = {"application/json"})
+    //@PreAuthorize("hasRole('ROLE_DIRECTOR')")
+    @PostMapping(consumes = { "application/json" })
     public ResponseEntity<Railcar> add(@RequestBody final Railcar railcar, final UriComponentsBuilder uriComponentsBuilder) {
-        if(snowPiercer.add(railcar)) {
+        if (snowPiercer.add(railcar)) {
             final URI location = buildLocation(railcar, uriComponentsBuilder);
 
             return ResponseEntity.created(location).build();
