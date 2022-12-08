@@ -1,8 +1,14 @@
 package nl.techforce1.workshop.iam.snowpiercerdemo.api.railcar;
 
+import static org.springframework.http.HttpStatusCode.valueOf;
+
+import java.util.Optional;
+
+import nl.techforce1.workshop.iam.snowpiercerdemo.domain.Engine;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.SnowPiercer;
 import nl.techforce1.workshop.iam.snowpiercerdemo.domain.Traction;
 
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,16 +26,26 @@ public class EngineRestController {
 
     @PutMapping
     public ResponseEntity<Traction> move(@RequestBody final Traction traction) {
-        if (snowPiercer.getEngine()
-                .isEmpty()) {
-            return ResponseEntity.notFound()
-                    .build();
+        final Optional<Engine> engine = snowPiercer.getEngine();
+
+        // @formatter:off
+
+        if (engine.isEmpty()) {
+            return ResponseEntity.notFound().build();
         }
 
-        if (snowPiercer.isTractionSupported(traction)) {
+        if (engine.get().changeTraction(traction)) {
             return ResponseEntity.ok(traction);
         }
 
-        return ResponseEntity.ok(Traction.INERT);
+        return ResponseEntity.of(badRequestBecauseOfPhysicsLawViolation()).build();
+
+        // @formatter:on
+    }
+
+    private ProblemDetail badRequestBecauseOfPhysicsLawViolation() {
+        return ProblemDetail.forStatusAndDetail( //
+                valueOf(400), //
+                "Cannot apply tractive change; Some wagons are too light. Add weight to all cars. Almost any person will do, but brakemen don't count.");
     }
 }

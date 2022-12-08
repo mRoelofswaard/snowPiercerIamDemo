@@ -27,7 +27,7 @@ public class Railcar {
 
     public void enter(final Inhabitant candidate) {
         if (isTaily(candidate) && isBrakeManMissing()) {
-            return; //A taily will simply escape unless subjugated by a brakeman.
+            return; //Tailies don't stay put unless subjugated by a brakeman.
         }
 
         inhabitants.add(candidate);
@@ -44,7 +44,8 @@ public class Railcar {
     }
 
     private boolean isTaily(final Inhabitant candidate) {
-        return candidate.roles().stream()
+        return candidate.roles()
+                .stream()
                 .anyMatch(role -> role == TAILY);
     }
 

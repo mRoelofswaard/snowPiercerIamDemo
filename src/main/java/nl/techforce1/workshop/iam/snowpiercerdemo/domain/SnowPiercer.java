@@ -2,7 +2,6 @@ package nl.techforce1.workshop.iam.snowpiercerdemo.domain;
 
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.TAILY;
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Traction.INERT;
-import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.WagonClass.ENGINE;
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.WagonClass.TAIL;
 
 import java.util.HashMap;
@@ -40,9 +39,10 @@ public class SnowPiercer implements Train {
         return true;
     }
 
-    public Optional<Railcar> getEngine() {
+    public Optional<Engine> getEngine() {
         return getRailcars().stream()
-                .filter(railcar -> railcar.getWagonClass() == ENGINE)
+                .filter(Engine.class::isInstance)
+                .map(Engine.class::cast)
                 .findFirst();
     }
 
