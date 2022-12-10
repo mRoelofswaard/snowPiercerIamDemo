@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: snowpiercer
+  name: snowpiercer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snowpiercer
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: snowpiercer
+    spec:
+      # dit is alleen voorlokaal k3d plezier!!!!
+      hostAliases:
+      - ip: MY_IP_ADDRESS
+        hostnames:
+        - k3s-local.markey-marc.nl        
+
+      containers:
+      - image: k3s-local.markey-marc.nl/snowpiercer:latest
+        name: snowpiercer
+        imagePullPolicy: Always
+        resources: {}
+        env:
+        - name: ISSUE_URI
+          value: https://k3s-local.markey-marc.nl/realms/snowpiercer
+        ports:
+          - containerPort: 8080
+            protocol: TCP        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: snowpiercer
+  labels:
+    app: snowpiercer
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: snowpiercer   
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: snowpiercer
+spec:
+  entryPoints:
+  - web
+  - websecure
+  routes:
+  - kind: Rule
+    match: Host(`k3s-local.markey-marc.nl`) && PathPrefix(`/snowpiercer`)
+    priority: 0
+    services:
+    - name: snowpiercer
+      port: 8080  
