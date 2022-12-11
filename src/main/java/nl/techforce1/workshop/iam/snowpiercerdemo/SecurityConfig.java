@@ -5,6 +5,7 @@ import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.ENGINEER;
 import static nl.techforce1.workshop.iam.snowpiercerdemo.domain.Role.ROLE_PREFIX;
 import static org.springframework.security.config.Customizer.withDefaults;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,15 +21,16 @@ import org.springframework.security.web.SecurityFilterChain;
 class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.requestMatchers(HttpMethod.POST, "/snowpiercer/cars")
+    public SecurityFilterChain filterChain(final HttpSecurity http, @Value("${spring.security.oauth2.client.provider.keycloak.issuer-uri}") String issuerURI) throws Exception {
+        http.authorizeHttpRequests(auth ->
+                        auth.requestMatchers(HttpMethod.POST, "/snowpiercer/cars")
                         .hasRole(DIRECTOR.name())
                         .requestMatchers("/snowpiercer/cars/engine/*")
                         .hasRole(ENGINEER.name())
                         .anyRequest()
                         .authenticated())
                 .oauth2ResourceServer(authConfigurer -> authConfigurer.jwt()
-                        .jwkSetUri("http://localhost:8380/realms/snowpiercer/protocol/openid-connect/certs"))
+                        .jwkSetUri(issuerURI + "/protocol/openid-connect/certs"))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .httpBasic(withDefaults());
 
