@@ -1,19 +1,9 @@
 #!/bin/bash
 
-FLAG_MAVEN=false
-for var in "$@"
-do
-    if [[ $var=="maven" ]]; then
-        FLAG_MAVEN=true
-    fi
-done
-
-# if flag maven then build software
-if $FLAG_MAVEN; then
-   current_dir=$(pwd)
-   cd ..
-   mvn clean install -Dmaven.test.skip=true
-   cd $current_dir
+if [ "$#" -eq 1 ]; then
+    MY_IP=$1
+else
+    MY_IP=$(ip route get 1 | awk '{print $7}')
 fi
 
 # create docker image and push it
@@ -28,7 +18,6 @@ kubectl create namespace workshop --dry-run=client -o yaml | kubectl apply -f -
 kubens workshop
 
 # Containers in snowpiercer deployment must be able to access k3s-local.markey-marc.nl
-MY_IP=$(ip route get 1 | awk '{print $7}')
 cat snowpiercer-k3d.yaml | sed 's/MY_IP_ADDRESS/'$MY_IP'/g' | kubectl apply -f -
 
 # remove old pods..
